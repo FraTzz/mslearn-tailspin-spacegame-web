@@ -1,15 +1,15 @@
 trigger:
-  - '*'
+- '*'
   
 pool:
-    vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-latest'
   
-variables:
+  variables:
     buildConfiguration: 'Release'
     wwwrootDir: 'Tailspin.SpaceGame.Web/wwwroot'
     dotnetSdkVersion: '6.x'
   
-steps:
+  steps:
   - task: UseDotNet@2
     displayName: 'Use .NET SDK $(dotnetSdkVersion)'
     inputs:
@@ -35,15 +35,15 @@ steps:
     inputs:
       command: 'restore'
       projects: '**/*.csproj'
-
+  
   - template: templates/build.yml
     parameters:
       buildConfiguration: 'Debug'
-
+  
   - template: templates/build.yml
     parameters:
       buildConfiguration: 'Release'
-
+  
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: drop'
     condition: succeeded()
